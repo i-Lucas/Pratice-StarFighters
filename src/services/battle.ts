@@ -84,3 +84,7 @@ async function updateDrawStats(firstFighterId: number, secondFighterId: number) 
     await fighterRepository.updateStats(firstFighterId, "draws");
     await fighterRepository.updateStats(secondFighterId, "draws");
 }
+
+export async function find() {
+    return fighterRepository.find();
+}

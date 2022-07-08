@@ -12,5 +12,6 @@ export async function battle(req: Request, res: Response) {
 
 export async function ranking(req: Request, res: Response) {
 
-    return res.sendStatus(200);
+    const ranking = await battleService.find();
+    return res.json({ ranking });
 }
