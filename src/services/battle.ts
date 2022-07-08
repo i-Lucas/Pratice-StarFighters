@@ -21,6 +21,8 @@ export async function battle(firstUser: string, secondUser: string) {
 }
 
 async function getRepos(user: string) {
+
+    // throw { status: 401, message: "Not implemented" }; // throw errors manually
     const { data } = await axios.get(`https://api.github.com/users/${user}/repos`);
     return data;
 }
@@ -45,7 +47,7 @@ async function battleResult(firstFighter: any, secondFighter: any, firstUserStar
 
     if (firstUserStars > secondUserStars) {
 
-        console.log("first user wins");
+        // console.log("first user wins");
         await updateWinnerAndLoserStats(firstFighter.id, secondFighter.id);
         return {
             winner: firstFighter,
@@ -57,7 +59,7 @@ async function battleResult(firstFighter: any, secondFighter: any, firstUserStar
 
     } else if (firstUserStars < secondUserStars) {
 
-        console.log("second user wins");
+        // console.log("second user wins");
         await updateWinnerAndLoserStats(secondFighter.id, firstFighter.id);
         return {
             winner: secondFighter.username,
@@ -68,7 +70,7 @@ async function battleResult(firstFighter: any, secondFighter: any, firstUserStar
         };
     }
 
-    console.log('draw');
+    // console.log('draw');
     await updateDrawStats(firstFighter.id, secondFighter.id);
     return { winner: null, loser: null, draw: true, totalStars: firstUserStars };
 }
