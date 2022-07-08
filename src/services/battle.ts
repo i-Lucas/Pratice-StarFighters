@@ -2,11 +2,20 @@ import axios from 'axios';
 
 export async function battle(firstUser: string, secondUser: string) {
 
-    const firstUserRepos = await axios.get(`https://api.github.com/users/${firstUser}/repos`);
-    const secondUserRepos = await axios.get(`https://api.github.com/users/${secondUser}/repos`);
+    const firstUserRepos = await getRepos(firstUser);
+    const secondUserRepos = await getRepos(secondUser);
 
-    const firstUserStars = firstUserRepos.data.map(repo => repo.stargazers_count).reduce((acc, curr) => acc + curr, 0);
-    const secondUserStars = secondUserRepos.data.map(repo => repo.stargazers_count).reduce((acc, curr) => acc + curr, 0);
+    const firstUserStars = starsCount(firstUserRepos);
+    const secondUserStars = starsCount(secondUserRepos);
 
     return firstUserStars > secondUserStars ? firstUser : secondUser;
+}
+
+async function getRepos(user: string) {
+    const { data } = await axios.get(`https://api.github.com/users/${user}/repos`);
+    return data;
+}
+
+function starsCount(repos: any[]) {
+    return repos.map(repo => repo.stargazers_count).reduce((acc, curr) => acc + curr, 0);
 }
